@@ -1,0 +1,12 @@
+:root {
+    --defaultColor: #5F2A84;
+    --darkerDefaultColor: #524096;
+    --elementColor: #2082A6;
+    --accentColor: #01EFAC;
+    --darkerAccentColor: #01CBAE;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
