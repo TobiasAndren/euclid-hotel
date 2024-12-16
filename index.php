@@ -6,9 +6,9 @@ require __DIR__ . "/contents/header.php";
 ?>
 
 <section aria-label="welcome-article">
-    <article>
+    <article class="welcome">
         <h3>The Night Belongs To You!</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere aperiam nesciunt, magnam ullam incidunt, tempore exercitationem natus id repudiandae veritatis alias. Repellat quae harum sunt cumque? Amet recusandae harum laboriosam.</p>
+        <p class="welcomeText">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere aperiam nesciunt, magnam ullam incidunt, tempore exercitationem natus id repudiandae veritatis alias. Repellat quae harum sunt cumque? Amet recusandae harum laboriosam.</p>
     </article>
 </section>
 

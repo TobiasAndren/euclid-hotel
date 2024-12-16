@@ -1,0 +1,16 @@
+.welcome {
+    height: 60vh;
+    width: 100vw;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcomeText {
+    width: 60%;
+    margin-top: 1rem;
+    margin-left: 3rem;
+    margin-right: 3rem;
+}
