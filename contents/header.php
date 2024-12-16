@@ -15,12 +15,12 @@
     <link rel="stylesheet" href="../assets/css/footer.css">
 </head>
 
-<body>
+<body class="body">
 
     <header class="header">
         <h2>Logo</h2>
         <nav>
-            <a href="">menu items</a>
+            <a href="" class="headerLinks">menu items</a>
         </nav>
     </header>
 

@@ -1,0 +1,17 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 10vh;
+    margin-right: 3rem;
+    margin-left: 3rem;
+}
+
+.headerLinks {
+    text-decoration: none;
+    color: var(--textColor);
+}
+
+.headerLinks:hover {
+    text-decoration: underline;
+}
