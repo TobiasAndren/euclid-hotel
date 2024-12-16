@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Euclid Hotel</title>
     <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/header.css">
+    <link rel="stylesheet" href="../assets/css/welcome.css">
+    <link rel="stylesheet" href="../assets/css/discount.css">
+    <link rel="stylesheet" href="../assets/css/cta.css">
+    <link rel="stylesheet" href="../assets/css/features.css">
+    <link rel="stylesheet" href="../assets/css/sign-up.css">
+    <link rel="stylesheet" href="../assets/css/footer.css">
 </head>
 
 <body>
