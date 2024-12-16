@@ -29,7 +29,18 @@ require __DIR__ . "/contents/header.php";
 </section>
 
 <section aria-label="features">
-
+    <div>
+        <img src="" alt="">
+        <article>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas ut sapiente expedita perspiciatis voluptatem error architecto animi beatae odio nostrum quo maxime ea et, iure laudantium ratione consequuntur numquam pariatur?</article>
+    </div>
+    <div>
+        <article>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, ducimus. Voluptatem aperiam et ad tempore dolorem distinctio officiis consectetur praesentium corrupti repellendus repellat veniam repudiandae alias sed, ipsam reiciendis esse?</article>
+        <img src="" alt="">
+    </div>
+    <div>
+        <img src="" alt="">
+        <article>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum qui magni sint sapiente ipsam, officiis accusamus. Atque quam hic perspiciatis temporibus odit mollitia praesentium quibusdam voluptas, adipisci quaerat facilis commodi!</article>
+    </div>
 </section>
 
 <section aria-label="sign-up">
