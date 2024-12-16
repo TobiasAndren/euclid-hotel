@@ -13,7 +13,11 @@ require __DIR__ . "/contents/header.php";
 </section>
 
 <section aria-label="discount-offer">
-
+    <img src="" alt="">
+    <article>
+        <h4>lorem</h4>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore aut laborum, voluptates omnis magni quas quos deserunt quidem animi molestiae dicta quam laboriosam quasi, quae voluptatem blanditiis voluptatibus culpa exercitationem!</p>
+    </article>
 </section>
 
 <section aria-label="cta">
