@@ -21,7 +21,11 @@ require __DIR__ . "/contents/header.php";
 </section>
 
 <section aria-label="cta">
-
+    <article>
+        <h2>Interested?</h2>
+        <p>Book a room here!</p>
+        <button>Book Here!</button>
+    </article>
 </section>
 
 <section aria-label="features">
