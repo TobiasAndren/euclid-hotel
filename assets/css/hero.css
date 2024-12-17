@@ -1,0 +1,21 @@
+.hero {
+    height: 90vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.heroImage {
+    object-fit: cover;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    z-index: -1;
+}
+
+.heroText {
+    font-size: 7rem;
+    font-family: "Dancing Script", cursive;
+}

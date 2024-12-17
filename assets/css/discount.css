@@ -1,4 +1,5 @@
 .discountContainer {
+    background-color: var(--elementColor);
     width: 100vw;
     height: 50vh;
     display: flex;

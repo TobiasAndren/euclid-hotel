@@ -1,9 +1,10 @@
 .welcome {
-    height: 40vh;
+    height: 30vh;
     width: 100vw;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: var(--defaultColor);
 }

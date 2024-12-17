@@ -5,10 +5,17 @@ require __DIR__ . "/contents/header.php";
 
 ?>
 
+<section aria-label="hero">
+    <div class="hero">
+        <h1 class="heroText">Euclid</h1>
+        <img src="assets/images/aurora-borealis.jpg" alt="" class="heroImage">
+    </div>
+</section>
+
 <section aria-label="welcome-article">
     <article class="welcome">
         <h3>The Night Belongs To You!</h3>
-        <p class="textFields">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere aperiam nesciunt, magnam ullam incidunt, tempore exercitationem natus id repudiandae veritatis alias. Repellat quae harum sunt cumque? Amet recusandae harum laboriosam.</p>
+        <p class="text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere aperiam nesciunt, magnam ullam incidunt, tempore exercitationem natus id repudiandae veritatis alias. Repellat quae harum sunt cumque? Amet recusandae harum laboriosam.</p>
     </article>
 </section>
 
@@ -17,16 +24,16 @@ require __DIR__ . "/contents/header.php";
         <img src="assets/images/aurora-borealis.jpg" alt="" class="discountImage">
         <article class="discountArticle">
             <h4>lorem</h4>
-            <p class="textFields">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore aut laborum, voluptates omnis magni quas quos deserunt quidem animi molestiae dicta quam laboriosam quasi, quae voluptatem blanditiis voluptatibus culpa exercitationem!</p>
+            <p class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore aut laborum, voluptates omnis magni quas quos deserunt quidem animi molestiae dicta quam laboriosam quasi, quae voluptatem blanditiis voluptatibus culpa exercitationem!</p>
         </article>
     </div>
 </section>
 
 <section aria-label="cta">
-    <article>
+    <article class="bookArticle">
         <h2>Interested?</h2>
-        <p>Book a room here</p>
-        <button>Book Here</button>
+        <p class="text">Book a room here</p>
+        <a href="<?php header("book-room.php") ?>" class="bookHereButton">Book Here</a>
     </article>
 </section>
 

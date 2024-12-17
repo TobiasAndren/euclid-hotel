@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+
 :root {
     --defaultColor: #5F2A84;
     --darkerDefaultColor: #524096;
@@ -17,7 +19,7 @@
     color: var(--textColor);
 }
 
-.textFields {
+.text {
     width: 60%;
     margin-top: 1rem;
     margin-left: 3rem;
