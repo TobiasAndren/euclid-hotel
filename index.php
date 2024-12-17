@@ -7,14 +7,16 @@ require __DIR__ . "/contents/header.php";
 
 <section aria-label="hero">
     <div class="hero">
-        <h1 class="heroText">Euclid</h1>
+        <article class="heroTextContainer">
+            <h1 class="heroText">Euclid</h1>
+            <h3>The Night Belongs To You!</h3>
+        </article>
         <img src="assets/images/aurora-borealis.jpg" alt="" class="heroImage">
     </div>
 </section>
 
 <section aria-label="welcome-article">
     <article class="welcome">
-        <h3>The Night Belongs To You!</h3>
         <p class="text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere aperiam nesciunt, magnam ullam incidunt, tempore exercitationem natus id repudiandae veritatis alias. Repellat quae harum sunt cumque? Amet recusandae harum laboriosam.</p>
     </article>
 </section>
@@ -60,10 +62,10 @@ require __DIR__ . "/contents/header.php";
 </section>
 
 <section aria-label="sign-up">
-    <article>
+    <article class="signUpContainer">
         <h4>Become a member</h4>
-        <p>Sign up here</p>
-        <button>Sign Up</button>
+        <p class="text">Sign up here</p>
+        <button class="signUpButton">Sign Up</button>
     </article>
 </section>
 

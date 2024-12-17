@@ -1,0 +1,27 @@
+.signUpContainer {
+    height: 40vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.signUpButton {
+    border: none;
+    height: 10%;
+    width: 7%;
+    margin: 1rem;
+    background-color: var(--textColor);
+    color: #000;
+    transition: all 100ms ease-in-out;
+}
+
+.signUpButton:hover {
+    transform: scale(1.03);
+}
+
+.signUpButton:active {
+    transform: translateY(1px);
+    background-color: var(--accentColor);
+}
