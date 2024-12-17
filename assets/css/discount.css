@@ -1,0 +1,22 @@
+.discountContainer {
+    width: 100vw;
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.discountArticle {
+    width: 50%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.discountImage {
+    width: 50%;
+    height: 100%;
+    object-fit: cover;
+}

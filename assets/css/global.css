@@ -16,3 +16,10 @@
     background-color: var(--defaultColor);
     color: var(--textColor);
 }
+
+.textFields {
+    width: 60%;
+    margin-top: 1rem;
+    margin-left: 3rem;
+    margin-right: 3rem;
+}

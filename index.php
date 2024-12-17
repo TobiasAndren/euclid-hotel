@@ -8,16 +8,18 @@ require __DIR__ . "/contents/header.php";
 <section aria-label="welcome-article">
     <article class="welcome">
         <h3>The Night Belongs To You!</h3>
-        <p class="welcomeText">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere aperiam nesciunt, magnam ullam incidunt, tempore exercitationem natus id repudiandae veritatis alias. Repellat quae harum sunt cumque? Amet recusandae harum laboriosam.</p>
+        <p class="textFields">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere aperiam nesciunt, magnam ullam incidunt, tempore exercitationem natus id repudiandae veritatis alias. Repellat quae harum sunt cumque? Amet recusandae harum laboriosam.</p>
     </article>
 </section>
 
 <section aria-label="discount-offer">
-    <img src="" alt="">
-    <article>
-        <h4>lorem</h4>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore aut laborum, voluptates omnis magni quas quos deserunt quidem animi molestiae dicta quam laboriosam quasi, quae voluptatem blanditiis voluptatibus culpa exercitationem!</p>
-    </article>
+    <div class="discountContainer">
+        <img src="assets/images/aurora-borealis.jpg" alt="" class="discountImage">
+        <article class="discountArticle">
+            <h4>lorem</h4>
+            <p class="textFields">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore aut laborum, voluptates omnis magni quas quos deserunt quidem animi molestiae dicta quam laboriosam quasi, quae voluptatem blanditiis voluptatibus culpa exercitationem!</p>
+        </article>
+    </div>
 </section>
 
 <section aria-label="cta">
