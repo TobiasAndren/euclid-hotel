@@ -21,9 +21,9 @@ require __DIR__ . "/contents/header.php";
 
 <section aria-label="discount-offer">
     <div class="discountContainer">
-        <img src="assets/images/aurora-borealis.jpg" alt="" class="discountImage">
+        <img src="assets/images/aurora-borealis.jpg" alt="" class="image">
         <article class="discountArticle">
-            <h4>lorem</h4>
+            <h4>Discount</h4>
             <p class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore aut laborum, voluptates omnis magni quas quos deserunt quidem animi molestiae dicta quam laboriosam quasi, quae voluptatem blanditiis voluptatibus culpa exercitationem!</p>
         </article>
     </div>
@@ -33,23 +33,30 @@ require __DIR__ . "/contents/header.php";
     <article class="bookArticle">
         <h2>Interested?</h2>
         <p class="text">Book a room here</p>
-        <a href="<?php header("book-room.php") ?>" class="bookHereButton">Book Here</a>
+        <a href="book-room.php" class="bookHereButton">Book Here</a>
     </article>
 </section>
 
 <section aria-label="features">
-    <div>
-        <img src="" alt="">
-        <article>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas ut sapiente expedita perspiciatis voluptatem error architecto animi beatae odio nostrum quo maxime ea et, iure laudantium ratione consequuntur numquam pariatur?</article>
+    <div class="featuresContainer featureOne">
+        <img src="assets/images/aurora-borealis.jpg" alt="" class="image">
+        <article class="featuresArticle">
+            <p class="text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas ut sapiente expedita perspiciatis voluptatem error architecto animi beatae odio nostrum quo maxime ea et, iure laudantium ratione consequuntur numquam pariatur?</p>
+        </article>
     </div>
-    <div>
-        <article>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, ducimus. Voluptatem aperiam et ad tempore dolorem distinctio officiis consectetur praesentium corrupti repellendus repellat veniam repudiandae alias sed, ipsam reiciendis esse?</article>
-        <img src="" alt="">
+    <div class="featuresContainer featureTwo">
+        <article class="featuresArticle">
+            <p class="text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas ut sapiente expedita perspiciatis voluptatem error architecto animi beatae odio nostrum quo maxime ea et, iure laudantium ratione consequuntur numquam pariatur?</p>
+        </article>
+        <img src="assets/images/aurora-borealis.jpg" alt="" class="image">
     </div>
-    <div>
-        <img src="" alt="">
-        <article>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum qui magni sint sapiente ipsam, officiis accusamus. Atque quam hic perspiciatis temporibus odit mollitia praesentium quibusdam voluptas, adipisci quaerat facilis commodi!</article>
+    <div class="featuresContainer featureThree">
+        <img src="assets/images/aurora-borealis.jpg" alt="" class="image">
+        <article class="featuresArticle">
+            <p class="text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas ut sapiente expedita perspiciatis voluptatem error architecto animi beatae odio nostrum quo maxime ea et, iure laudantium ratione consequuntur numquam pariatur?</p>
+        </article>
     </div>
+
 </section>
 
 <section aria-label="sign-up">

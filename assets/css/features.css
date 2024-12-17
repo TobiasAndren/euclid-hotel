@@ -1,0 +1,29 @@
+.featuresContainer {
+    height: 70vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.featuresArticle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 50%;
+    text-align: center;
+}
+
+
+.featureOne {
+    background-color: var(--darkerAccentColor);
+}
+
+.featureTwo {
+    background-color: var(--elementColor);
+}
+
+.featureThree {
+    background-color: var(--darkerDefaultColor);
+}

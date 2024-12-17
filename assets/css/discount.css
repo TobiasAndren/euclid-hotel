@@ -16,8 +16,3 @@
     flex-direction: column;
 }
 
-.discountImage {
-    width: 50%;
-    height: 100%;
-    object-fit: cover;
-}
