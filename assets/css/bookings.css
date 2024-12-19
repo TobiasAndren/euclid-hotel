@@ -1,13 +1,57 @@
 .calendarContainer {
     padding-top: 4.5rem;
-    margin: 3rem;
+    margin-left: 3rem;
+    margin-right: 3rem;
+    margin-bottom: 3rem;
     width: 50vw;
-    height: 80vh;
+    height: 70vh;
 }
 
 .roomType {
     height: 5vh;
     width: 10vw;
+    padding-left: 1rem;
     background-color: var(--textColor);
     margin-bottom: 1rem;
+}
+
+.bookingsContainer {
+    height: 80vh;
+    width: 100vw;
+    margin: 3rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.labelText {
+    margin-top: 1rem;
+    font-size: 1.3rem;
+}
+
+.input {
+    padding-left: 1rem;
+    border: none;
+    width: 20%;
+    height: 7%;
+    background-color: var(--textColor);
+    margin-top: 1rem;
+}
+
+.bookButton {
+    border: none;
+    margin-top: 2rem;
+    height: 5%;
+    width: 7%;
+    background-color: var(--textColor);
+    color: #000;
+    transition: all 100ms ease-in-out;
+}
+
+.bookButton:hover {
+    transform: scale(1.03);
+}
+
+.bookButton:active {
+    transform: translateY(1px);
+    background-color: var(--accentColor);
 }
