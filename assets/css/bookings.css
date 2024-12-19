@@ -1,0 +1,13 @@
+.calendarContainer {
+    padding-top: 4.5rem;
+    margin: 3rem;
+    width: 50vw;
+    height: 80vh;
+}
+
+.roomType {
+    height: 5vh;
+    width: 10vw;
+    background-color: var(--textColor);
+    margin-bottom: 1rem;
+}

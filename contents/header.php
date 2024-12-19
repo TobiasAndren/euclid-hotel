@@ -14,12 +14,13 @@
     <link rel="stylesheet" href="../assets/css/features.css">
     <link rel="stylesheet" href="../assets/css/sign-up.css">
     <link rel="stylesheet" href="../assets/css/footer.css">
+    <link rel="stylesheet" href="../assets/css/bookings.css">
 </head>
 
 <body class="body">
 
     <header class="header">
-        <h2>Logo</h2>
+        <a href="index.php" class="logo">Logo</a>
         <nav>
             <a href="" class="headerLinks">menu items</a>
         </nav>

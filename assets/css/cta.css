@@ -13,5 +13,18 @@
     margin: 1rem;
     height: 10%;
     width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-decoration: none;
+    transition: all 100ms ease-in-out;
+}
+
+.bookHereButton:hover {
+    transform: scale(1.03);
+}
+
+.bookHereButton:active {
+    transform: translateY(1px);
+    background-color: var(--accentColor);
 }

@@ -18,3 +18,10 @@
 .headerLinks:hover {
     text-decoration: underline;
 }
+
+.logo {
+    text-decoration: none;
+    font-size: 1.7rem;
+    color: var(--textColor);
+    font-weight: 500;
+}

@@ -25,7 +25,7 @@ require __DIR__ . "/contents/header.php";
     <div class="discountContainer">
         <img src="assets/images/aurora-borealis.jpg" alt="" class="image">
         <article class="discountArticle">
-            <h4>Discount</h4>
+            <h4>Offer</h4>
             <p class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore aut laborum, voluptates omnis magni quas quos deserunt quidem animi molestiae dicta quam laboriosam quasi, quae voluptatem blanditiis voluptatibus culpa exercitationem!</p>
         </article>
     </div>
