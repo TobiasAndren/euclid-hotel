@@ -20,8 +20,9 @@
 <body class="body">
 
     <header class="header">
-        <a href="index.php" class="logo">Logo</a>
+        <a href="index.php" class="logo">Euclid</a>
         <nav>
-            <a href="" class="headerLinks">menu items</a>
+            <a href="" class="headerLinks">about us</a>
+            <a href="book-room.php" class="headerLinks">book now</a>
         </nav>
     </header>

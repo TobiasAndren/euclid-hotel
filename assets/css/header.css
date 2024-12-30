@@ -11,8 +11,9 @@
 
 .headerLinks {
     text-decoration: none;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     color: var(--textColor);
+    margin-left: 1.3rem;
 }
 
 .headerLinks:hover {
@@ -21,7 +22,8 @@
 
 .logo {
     text-decoration: none;
-    font-size: 1.7rem;
+    font-size: 2.5rem;
+    font-family: "Dancing Script", cursive;
     color: var(--textColor);
     font-weight: 500;
 }
