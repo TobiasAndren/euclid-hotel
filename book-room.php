@@ -41,7 +41,7 @@ if (isset($_POST['transferCode'], $_POST['roomType'], $_POST['arrivalDate'], $_P
 
     $confirmation = [];
 
-    $confirmation[] = [
+    $confirmation = [
         'firstName' => $firstName,
         'lastName' => $lastName,
         'roomType' => $roomType,
@@ -54,7 +54,7 @@ if (isset($_POST['transferCode'], $_POST['roomType'], $_POST['arrivalDate'], $_P
 
     $booking = json_encode($confirmation, JSON_PRETTY_PRINT);
 
-    file_put_contents($fileName, $booking);
+    // file_put_contents($fileName, $booking);
 }
 
 
@@ -67,6 +67,17 @@ $calendar->useMondayStartingDate();
 $calendar->useFullDayNames();
 
 ?>
+<section aria-label="popup">
+    <?php if (isset($booking)) { ?>
+        <div class="popup" id="popup">
+            <pre class="popupText" id="pupupText">Booking Confirmation:
+    
+<?= $booking; ?>
+            </pre>
+        </div>
+    <?php
+    } ?>
+</section>
 
 <section aria-label="book">
     <div class="calendarContainer">
@@ -74,7 +85,7 @@ $calendar->useFullDayNames();
             <?php echo $calendar->draw(date('2025-01-01')); ?>
         </div>
     </div>
-    <form action="" method="post" class="bookingsContainer">
+    <form action="" method="post" class="bookingsContainer" id="bookForm">
         <label for="roomType" class="labelText">What room do you wish to stay in?</label>
         <select name="roomType" id="roomType" class="input">
             <option value="economy">Economy</option>
@@ -113,6 +124,8 @@ $calendar->useFullDayNames();
         <button type="submit" class="bookButton" id="bookButton">Book now</button>
     </form>
 </section>
+
+
 
 
 <?php
