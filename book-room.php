@@ -3,6 +3,8 @@
 require __DIR__ . "/vendor/autoload.php";
 require __DIR__ . "/contents/header.php";
 
+$database = new PDO('sqlite:hotel.db');
+
 function isValidUuid(string $uuid): bool
 {
 
@@ -12,6 +14,8 @@ function isValidUuid(string $uuid): bool
 
     return true;
 }
+
+$errors = [];
 
 if (isset($_POST['transferCode'], $_POST['roomType'], $_POST['arrivalDate'], $_POST['departureDate'], $_POST['firstName'], $_POST['lastName'])) {
     $roomType = $_POST['roomType'];
@@ -49,12 +53,7 @@ if (isset($_POST['transferCode'], $_POST['roomType'], $_POST['arrivalDate'], $_P
         'departureDate' => $departureDate,
         'features' => $selectedNames
     ];
-
-    $fileName = __DIR__ . "/contents/confirmations/" . $arrivalDate . preg_replace('/[^a-zA-Z0-9]/', '_', $firstName) . ".json";
-
     $booking = json_encode($confirmation, JSON_PRETTY_PRINT);
-
-    // file_put_contents($fileName, $booking);
 }
 
 
@@ -70,10 +69,15 @@ $calendar->useFullDayNames();
 <section aria-label="popup">
     <?php if (isset($booking)) { ?>
         <div class="popup" id="popup">
-            <pre class="popupText" id="pupupText">Booking Confirmation:
-    
+            <div class="popupContainer">
+                <button class="closeWindow" id="closeWindow">
+                    <img src="assets/images/window-close.png" alt="" class="closeWindowImage">
+                </button>
+                <pre class="popupText" id="pupupText">Booking Confirmation:
+        
 <?= $booking; ?>
-            </pre>
+                </pre>
+            </div>
         </div>
     <?php
     } ?>

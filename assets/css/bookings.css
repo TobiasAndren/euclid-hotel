@@ -72,12 +72,39 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.popup .popupText {
+.popupContainer {
     height: 70%;
     width: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: var(--elementColor);
+}
+
+.popup .popupText {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
+}
+
+.closeWindow {
+    z-index: 150;
+    height: 5%;
+    width: 3%;
+    position: absolute;
+    top: 120px;
+    right: 380px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.closeWindowImage {
+    height: 100%;
+    width: 100%;
+}
+
+.hide {
+    visibility: hidden;
 }
