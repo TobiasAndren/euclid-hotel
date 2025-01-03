@@ -35,7 +35,7 @@ if (isset($_POST['transferCode'], $_POST['roomType'], $_POST['arrivalDate'], $_P
         3 => "snowmobile"
     ];
 
-    $insertGuestsQuery = 'INSERT OR IGNORE INTO Guests (first_name, last_name) VALUES (:firstName, :lastName)';
+    $insertGuestsQuery = 'INSERT INTO Guests (first_name, last_name) VALUES (:firstName, :lastName)';
     $insertGuests = $database->prepare($insertGuestsQuery);
 
     $insertGuests->bindParam(':firstName', $firstName, PDO::PARAM_STR);
