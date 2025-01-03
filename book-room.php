@@ -3,7 +3,11 @@
 require __DIR__ . "/vendor/autoload.php";
 require __DIR__ . "/contents/header.php";
 
-$database = new PDO('sqlite:hotel.db');
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+$database = new PDO('sqlite:' . $_ENV['DATABASE']);
 
 function isValidUuid(string $uuid): bool
 {
@@ -24,7 +28,6 @@ if (isset($_POST['transferCode'], $_POST['roomType'], $_POST['arrivalDate'], $_P
     $firstName = htmlspecialchars($_POST['firstName']);
     $lastName = htmlspecialchars($_POST['lastName']);
     $transferCode = htmlspecialchars($_POST['transferCode']);
-    $features = $_POST["features"];
 
     $featuresMap = [
         1 => "coffee maker",
@@ -32,27 +35,97 @@ if (isset($_POST['transferCode'], $_POST['roomType'], $_POST['arrivalDate'], $_P
         3 => "snowmobile"
     ];
 
-    if (isset($_POST['features'])) {
-        $selectedFeatures = $_POST['features'];
+    $insertGuestsQuery = 'INSERT OR IGNORE INTO Guests (first_name, last_name) VALUES (:firstName, :lastName)';
+    $insertGuests = $database->prepare($insertGuestsQuery);
+
+    $insertGuests->bindParam(':firstName', $firstName, PDO::PARAM_STR);
+    $insertGuests->bindParam(':lastName', $lastName, PDO::PARAM_STR);
+    $insertGuests->execute();
+
+    $guestIdQuery = $database->query('SELECT id FROM Guests WHERE first_name = :firstName');
+    $guestIdQuery->bindParam(':firstName', $firstName, PDO::PARAM_STR);
+    $guestIdQuery->execute();
+
+    $guestIdResult = $guestIdQuery->fetch(PDO::FETCH_ASSOC);
+    $guestId = $guestIdResult['id'];
+
+    $roomIdQuery = $database->query('SELECT id FROM Rooms WHERE room_type = :roomType');
+    $roomIdQuery->bindParam(':roomType', $roomType, PDO::PARAM_STR);
+    $roomIdQuery->execute();
+
+    $roomIdResult = $roomIdQuery->fetch(PDO::FETCH_ASSOC);
+    $roomId = $roomIdResult['id'];
+
+    $insertBookingsQuery = 'INSERT INTO Bookings (guest_id, room_id, arrival_date, departure_date) VALUES (:guestId, :roomId, :arrivalDate, :departureDate)';
+
+    $insertBookings = $database->prepare($insertBookingsQuery);
+    $insertBookings->bindParam(':guestId', $guestId, PDO::PARAM_INT);
+    $insertBookings->bindParam(':roomId', $roomId, PDO::PARAM_INT);
+    $insertBookings->bindParam(':arrivalDate', $arrivalDate);
+    $insertBookings->bindParam(':departureDate', $departureDate);
+    $insertBookings->execute();
+
+    if (isset($_POST["features"])) {
+        $features = $_POST["features"];
+
+        $featuresMap = [
+            1 => "coffee maker",
+            2 => "heated lagoon",
+            3 => "snowmobile"
+        ];
+
         $selectedNames = [];
 
-        foreach ($selectedFeatures as $feature) {
+        foreach ($features as $feature) {
             if (isset($featuresMap[$feature])) {
                 $selectedNames[] = $featuresMap[$feature];
+            }
+        }
+
+        $bookingsIdQuery = $database->query('SELECT id FROM Bookings WHERE guest_id = :guestId');
+        $bookingsIdQuery->bindParam(':guestId', $guestId, PDO::PARAM_INT);
+        $bookingsIdQuery->execute();
+
+        $bookingIdResult = $bookingsIdQuery->fetch(PDO::FETCH_ASSOC);
+        $bookingId = $bookingIdResult['id'];
+
+        $junctionInsertQuery = "INSERT INTO Junction (feature_id, booking_id) VALUES (:featureId, :bookingId)";
+
+
+        foreach ($features as $feature) {
+            if (isset($featuresMap[$feature])) {
+                $junctionInsert = $database->prepare($junctionInsertQuery);
+
+                $junctionInsert->bindParam(':featureId', $feature, PDO::PARAM_INT);
+                $junctionInsert->bindParam(':bookingId', $bookingId, PDO::PARAM_INT);
+
+                $junctionInsert->execute();
             }
         }
     }
 
     $confirmation = [];
 
-    $confirmation = [
-        'firstName' => $firstName,
-        'lastName' => $lastName,
-        'roomType' => $roomType,
-        'arrivalDate' => $arrivalDate,
-        'departureDate' => $departureDate,
-        'features' => $selectedNames
-    ];
+    if (isset($selectedNames)) {
+        $confirmation = [
+            'firstName' => $firstName,
+            'lastName' => $lastName,
+            'roomType' => $roomType,
+            'arrivalDate' => $arrivalDate,
+            'departureDate' => $departureDate,
+            'features' => $selectedNames
+        ];
+    } else {
+        $confirmation = [
+            'firstName' => $firstName,
+            'lastName' => $lastName,
+            'roomType' => $roomType,
+            'arrivalDate' => $arrivalDate,
+            'departureDate' => $departureDate,
+            'features' => 'none'
+        ];
+    }
+
     $booking = json_encode($confirmation, JSON_PRETTY_PRINT);
 }
 
