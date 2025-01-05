@@ -140,6 +140,13 @@ if (isset($_POST['transferCode'], $_POST['roomType'], $_POST['arrivalDate'], $_P
             }
         }
 
+        $arrival = new DateTime($arrivalDate);
+        $departure = new DateTime($departureDate);
+
+        $interval = $arrival->diff($departure);
+
+        $numberOfDays = $interval->days;
+
         $roomPriceQuery = $database->query('SELECT price FROM Rooms WHERE room_type = :roomType');
         $roomPriceQuery->bindParam(':roomType', $roomType, PDO::PARAM_STR);
         $roomPriceQuery->execute();
@@ -161,8 +168,19 @@ if (isset($_POST['transferCode'], $_POST['roomType'], $_POST['arrivalDate'], $_P
         $featurePriceResult = $featurePriceQuery->fetch(PDO::FETCH_ASSOC);
         $featurePrice = $featurePriceResult['featurePrice'];
 
+        if ($numberOfDays >= 3) {
+            $discount = 0.30;
+        } else {
+            $discount = 0;
+        }
 
-        $totalPrice = $roomPrice + $featurePrice;
+        $totalRoomPrice = $roomPrice * $numberOfDays;
+
+        $totalPrice = $totalRoomPrice + $featurePrice;
+
+        if ($discount > 0) {
+            $totalPrice = $totalPrice - ($totalPrice * $discount);
+        }
 
         $confirmation = [];
 
