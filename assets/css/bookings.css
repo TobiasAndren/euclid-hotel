@@ -1,15 +1,20 @@
 .calendarContainer {
     padding-top: 5rem;
+    margin-top: 1rem;
     margin-left: 3rem;
     margin-right: 3rem;
     margin-bottom: 3rem;
     width: 50vw;
-    height: 70vh;
+    height: 200vh;
+}
+
+.calendar {
+    margin-top: 1rem;
 }
 
 .bookingsContainer {
     height: 115vh;
-    width: 100vw;
+    width: 90vw;
     margin: 3rem;
     display: flex;
     flex-direction: column;
@@ -86,6 +91,9 @@
     justify-content: center;
     align-items: center;
     position: relative;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-width: 50%;
 }
 
 .closeWindow {

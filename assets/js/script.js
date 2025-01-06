@@ -1,9 +1,4 @@
-const submitButton = document.getElementById("bookButton")
 const closeWindow = document.getElementById("closeWindow")
-
-submitButton.addEventListener("submit", (submit) =>{
-    submit.preventDefault();
-})
 
 closeWindow.addEventListener("click", (close) => {
     close.preventDefault();

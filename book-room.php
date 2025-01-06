@@ -3,6 +3,7 @@
 require __DIR__ . "/vendor/autoload.php";
 require __DIR__ . "/contents/header.php";
 
+use GuzzleHttp\Client;
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
@@ -19,7 +20,43 @@ function isValidUuid(string $uuid): bool
     return true;
 }
 
+function checkTransferCode($transferCode, $totalPrice)
+{
+    $client = new Client();
+
+    $response = $client->post('https://www.yrgopelago.se/centralbank/transferCode', [
+        'json' => [
+            'transferCode' => $transferCode,
+            'totalcost' => $totalPrice
+        ]
+    ]);
+
+    $data = json_decode($response->getBody()->getContents(), true);
+
+    return $data['status'] ?? false;
+}
+
+function depositTransferCode($transferCode, $numberOfDays)
+{
+    $client = new Client();
+
+    $response = $client->post('https://www.yrgopelago.se/centralbank/deposit', [
+        'json' => [
+            'user' => 'Tobias',
+            'transferCode' => $transferCode,
+            'numberOfDays' => $numberOfDays
+        ]
+    ]);
+
+    $data = json_decode($response->getBody()->getContents(), true);
+
+    return $data['status'] ?? false;
+}
+
+
 $errors = [];
+
+
 
 if (isset($_POST['transferCode'], $_POST['roomType'], $_POST['arrivalDate'], $_POST['departureDate'], $_POST['firstName'], $_POST['lastName'])) {
     $roomType = $_POST['roomType'];
@@ -55,161 +92,193 @@ if (isset($_POST['transferCode'], $_POST['roomType'], $_POST['arrivalDate'], $_P
     $roomAvailabilityResult = $roomAvailabilityQuery->fetch(PDO::FETCH_ASSOC);
     $roomAvailability = $roomAvailabilityResult['overlappingBookings'];
 
+    $arrival = new DateTime($arrivalDate);
+    $departure = new DateTime($departureDate);
+
+    $interval = $arrival->diff($departure);
+
+    $numberOfDays = $interval->days;
+
+    $roomPriceQuery = $database->query('SELECT price FROM Rooms WHERE room_type = :roomType');
+    $roomPriceQuery->bindParam(':roomType', $roomType, PDO::PARAM_STR);
+    $roomPriceQuery->execute();
+
+    $roomPriceResult = $roomPriceQuery->fetch(PDO::FETCH_ASSOC);
+    $roomPrice = $roomPriceResult['price'];
+
+    if ($numberOfDays >= 3) {
+        $discount = 0.30;
+    } else {
+        $discount = 0;
+    }
+
+    $featurePrice = 0;
+
+    if (isset($_POST["features"])) {
+        $features = $_POST["features"];
+
+        $selectedFeatures  = str_repeat('?,', count($features) - 1) . '?';
+        $featurePriceQuery = $database->prepare('SELECT price FROM Features WHERE id IN (' . $in . ')');
+        $featurePriceQuery->execute($features);
+
+        $featurePriceResult = $featurePriceQuery->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($featurePriceResult as $feature) {
+            $featurePrice += $feature['price'];
+        }
+    }
+
+    $totalRoomPrice = $roomPrice * $numberOfDays;
+
+    $totalPrice = $totalRoomPrice + $featurePrice;
+
+    if ($discount > 0) {
+        $totalPrice = $totalPrice - ($totalPrice * $discount);
+    }
+
+    $totalPrice = round($totalPrice, 2);
+
     if ($roomAvailability > 0) {
         $errors[] = 'room is not available';
     } else {
+        if (isValidUuid($transferCode)) {
+            if (checkTransferCode($transferCode, $totalPrice)) {
+                if (depositTransferCode($transferCode, $numberOfDays)) {
 
-        $insertGuestsQuery = 'INSERT INTO Guests (first_name, last_name) VALUES (:firstName, :lastName)';
-        $insertGuests = $database->prepare($insertGuestsQuery);
+                    $insertGuestsQuery = 'INSERT INTO Guests (first_name, last_name) VALUES (:firstName, :lastName)';
+                    $insertGuests = $database->prepare($insertGuestsQuery);
 
-        $insertGuests->bindParam(':firstName', $firstName, PDO::PARAM_STR);
-        $insertGuests->bindParam(':lastName', $lastName, PDO::PARAM_STR);
-        $insertGuests->execute();
+                    $insertGuests->bindParam(':firstName', $firstName, PDO::PARAM_STR);
+                    $insertGuests->bindParam(':lastName', $lastName, PDO::PARAM_STR);
+                    $insertGuests->execute();
 
-        $guestIdQuery = $database->query('SELECT id FROM Guests WHERE first_name = :firstName');
-        $guestIdQuery->bindParam(':firstName', $firstName, PDO::PARAM_STR);
-        $guestIdQuery->execute();
+                    $guestIdQuery = $database->query('SELECT id FROM Guests WHERE first_name = :firstName');
+                    $guestIdQuery->bindParam(':firstName', $firstName, PDO::PARAM_STR);
+                    $guestIdQuery->execute();
 
-        $guestIdResult = $guestIdQuery->fetch(PDO::FETCH_ASSOC);
-        $guestId = $guestIdResult['id'];
+                    $guestIdResult = $guestIdQuery->fetch(PDO::FETCH_ASSOC);
+                    $guestId = $guestIdResult['id'];
 
-        $roomIdQuery = $database->query('SELECT id FROM Rooms WHERE room_type = :roomType');
-        $roomIdQuery->bindParam(':roomType', $roomType, PDO::PARAM_STR);
-        $roomIdQuery->execute();
+                    $roomIdQuery = $database->query('SELECT id FROM Rooms WHERE room_type = :roomType');
+                    $roomIdQuery->bindParam(':roomType', $roomType, PDO::PARAM_STR);
+                    $roomIdQuery->execute();
 
-        $roomIdResult = $roomIdQuery->fetch(PDO::FETCH_ASSOC);
-        $roomId = $roomIdResult['id'];
+                    $roomIdResult = $roomIdQuery->fetch(PDO::FETCH_ASSOC);
+                    $roomId = $roomIdResult['id'];
 
-        $insertBookingsQuery = 'INSERT INTO Bookings (guest_id, room_id, arrival_date, departure_date) VALUES (:guestId, :roomId, :arrivalDate, :departureDate)';
+                    $insertBookingsQuery = 'INSERT INTO Bookings (guest_id, room_id, arrival_date, departure_date) VALUES (:guestId, :roomId, :arrivalDate, :departureDate)';
 
-        $insertBookings = $database->prepare($insertBookingsQuery);
-        $insertBookings->bindParam(':guestId', $guestId, PDO::PARAM_INT);
-        $insertBookings->bindParam(':roomId', $roomId, PDO::PARAM_INT);
-        $insertBookings->bindParam(':arrivalDate', $arrivalDate, PDO::PARAM_STR);
-        $insertBookings->bindParam(':departureDate', $departureDate, PDO::PARAM_STR);
-        $insertBookings->execute();
+                    $insertBookings = $database->prepare($insertBookingsQuery);
+                    $insertBookings->bindParam(':guestId', $guestId, PDO::PARAM_INT);
+                    $insertBookings->bindParam(':roomId', $roomId, PDO::PARAM_INT);
+                    $insertBookings->bindParam(':arrivalDate', $arrivalDate, PDO::PARAM_STR);
+                    $insertBookings->bindParam(':departureDate', $departureDate, PDO::PARAM_STR);
+                    $insertBookings->execute();
 
-        if (isset($_POST["features"])) {
-            $features = $_POST["features"];
+                    if (isset($features)) {
 
-            $featuresMap = [
-                1 => "coffee maker",
-                2 => "heated lagoon",
-                3 => "snowmobile"
-            ];
+                        $featuresMap = [
+                            1 => "coffee maker",
+                            2 => "heated lagoon",
+                            3 => "snowmobile"
+                        ];
 
-            $selectedNames = [];
+                        $selectedNames = [];
 
-            foreach ($features as $feature) {
-                if (isset($featuresMap[$feature])) {
-                    $selectedNames[] = $featuresMap[$feature];
+                        foreach ($features as $feature) {
+                            if (isset($featuresMap[$feature])) {
+                                $selectedNames[] = $featuresMap[$feature];
+                            }
+                        }
+
+                        $bookingsIdQuery = $database->query('SELECT Bookings.id 
+                        FROM Bookings 
+                        INNER JOIN Guests
+                        ON Guests.id = Bookings.guest_id
+                        INNER JOIN Rooms
+                        ON Rooms.id = Bookings.room_id
+                        WHERE Guests.id = :guestId
+                        AND Rooms.room_type = :roomType
+                        AND Bookings.arrival_date = :arrivalDate
+                        AND Bookings.departure_date = :departureDate');
+                        $bookingsIdQuery->bindParam(':guestId', $guestId, PDO::PARAM_STR);
+                        $bookingsIdQuery->bindParam(':roomType', $roomType, PDO::PARAM_STR);
+                        $bookingsIdQuery->bindParam(':arrivalDate', $arrivalDate, PDO::PARAM_STR);
+                        $bookingsIdQuery->bindParam(':departureDate', $departureDate, PDO::PARAM_STR);
+                        $bookingsIdQuery->execute();
+
+                        $bookingIdResult = $bookingsIdQuery->fetch(PDO::FETCH_ASSOC);
+                        $bookingId = $bookingIdResult['id'];
+
+                        $junctionInsertQuery = "INSERT INTO BookingFeaturesJunction (feature_id, booking_id) VALUES (:featureId, :bookingId)";
+
+
+                        foreach ($features as $feature) {
+                            if (isset($featuresMap[$feature])) {
+                                $junctionInsert = $database->prepare($junctionInsertQuery);
+
+                                $junctionInsert->bindParam(':featureId', $feature, PDO::PARAM_INT);
+                                $junctionInsert->bindParam(':bookingId', $bookingId, PDO::PARAM_INT);
+
+                                $junctionInsert->execute();
+                            }
+                        }
+                    }
+
+                    $featurePriceQuery = $database->query('SELECT sum(Features.price) AS featurePrice
+                    FROM Features 
+                    INNER JOIN BookingFeaturesJunction 
+                    ON Features.id = BookingFeaturesJunction.feature_id 
+                    INNER JOIN Bookings 
+                    ON Bookings.id = BookingFeaturesJunction.booking_id
+                    WHERE BookingFeaturesJunction.booking_id = :bookingId');
+
+                    $featurePriceQuery->bindParam('bookingId', $bookingId, PDO::PARAM_INT);
+                    $featurePriceQuery->execute();
+
+                    $featurePriceResult = $featurePriceQuery->fetch(PDO::FETCH_ASSOC);
+                    $featurePrice = $featurePriceResult['featurePrice'];
+
+                    $confirmation = [];
+
+                    if (isset($selectedNames)) {
+                        $confirmation = [
+                            'firstName' => $firstName,
+                            'lastName' => $lastName,
+                            'island' => 'Isle of Eden',
+                            'hotel' => 'Euclid Hotel',
+                            'roomType' => $roomType,
+                            'arrivalDate' => $arrivalDate,
+                            'departureDate' => $departureDate,
+                            'features' => $selectedNames,
+                            'totalPrice' => $totalPrice,
+                            'additonalInfo' => 'Thanks for your booking at the Euclid hotel! We hope you look forward to your stay just as much as us. If you have any additional questions feel free to contact us!'
+                        ];
+                    } else {
+                        $confirmation = [
+                            'firstName' => $firstName,
+                            'lastName' => $lastName,
+                            'island' => 'Isle of Eden',
+                            'roomType' => $roomType,
+                            'arrivalDate' => $arrivalDate,
+                            'departureDate' => $departureDate,
+                            'features' => 'none',
+                            'totalPrice' => $totalPrice,
+                            'additonalInfo' => 'Thanks for your booking at the Euclid hotel! We hope you look forward to your stay just as much as us. If you have any additional questions feel free to contact us!'
+                        ];
+
+                        $booking = json_encode($confirmation, JSON_PRETTY_PRINT);
+                    }
+                } else {
+                    $errors[] = "payment failed";
                 }
+            } else {
+                $errors[] = "transferCode is invalid";
             }
-
-            $bookingsIdQuery = $database->query('SELECT Bookings.id 
-            FROM Bookings 
-            INNER JOIN Guests
-            ON Guests.id = Bookings.guest_id
-            INNER JOIN Rooms
-            ON Rooms.id = Bookings.room_id
-            WHERE Guests.id = :guestId
-            AND Rooms.room_type = :roomType
-            AND Bookings.arrival_date = :arrivalDate
-            AND Bookings.departure_date = :departureDate');
-            $bookingsIdQuery->bindParam(':guestId', $guestId, PDO::PARAM_STR);
-            $bookingsIdQuery->bindParam(':roomType', $roomType, PDO::PARAM_STR);
-            $bookingsIdQuery->bindParam(':arrivalDate', $arrivalDate, PDO::PARAM_STR);
-            $bookingsIdQuery->bindParam(':departureDate', $departureDate, PDO::PARAM_STR);
-            $bookingsIdQuery->execute();
-
-            $bookingIdResult = $bookingsIdQuery->fetch(PDO::FETCH_ASSOC);
-            $bookingId = $bookingIdResult['id'];
-
-            $junctionInsertQuery = "INSERT INTO BookingFeaturesJunction (feature_id, booking_id) VALUES (:featureId, :bookingId)";
-
-
-            foreach ($features as $feature) {
-                if (isset($featuresMap[$feature])) {
-                    $junctionInsert = $database->prepare($junctionInsertQuery);
-
-                    $junctionInsert->bindParam(':featureId', $feature, PDO::PARAM_INT);
-                    $junctionInsert->bindParam(':bookingId', $bookingId, PDO::PARAM_INT);
-
-                    $junctionInsert->execute();
-                }
-            }
-        }
-
-        $arrival = new DateTime($arrivalDate);
-        $departure = new DateTime($departureDate);
-
-        $interval = $arrival->diff($departure);
-
-        $numberOfDays = $interval->days;
-
-        $roomPriceQuery = $database->query('SELECT price FROM Rooms WHERE room_type = :roomType');
-        $roomPriceQuery->bindParam(':roomType', $roomType, PDO::PARAM_STR);
-        $roomPriceQuery->execute();
-
-        $roomPriceResult = $roomPriceQuery->fetch(PDO::FETCH_ASSOC);
-        $roomPrice = $roomPriceResult['price'];
-
-        $featurePriceQuery = $database->query('SELECT sum(Features.price) AS featurePrice
-        FROM Features 
-        INNER JOIN BookingFeaturesJunction 
-        ON Features.id = BookingFeaturesJunction.feature_id 
-        INNER JOIN Bookings 
-        ON Bookings.id = BookingFeaturesJunction.booking_id
-        WHERE BookingFeaturesJunction.booking_id = :bookingId');
-
-        $featurePriceQuery->bindParam('bookingId', $bookingId, PDO::PARAM_INT);
-        $featurePriceQuery->execute();
-
-        $featurePriceResult = $featurePriceQuery->fetch(PDO::FETCH_ASSOC);
-        $featurePrice = $featurePriceResult['featurePrice'];
-
-        if ($numberOfDays >= 3) {
-            $discount = 0.30;
         } else {
-            $discount = 0;
+            $errors[] = "transferCode is not valid uuid";
         }
-
-        $totalRoomPrice = $roomPrice * $numberOfDays;
-
-        $totalPrice = $totalRoomPrice + $featurePrice;
-
-        if ($discount > 0) {
-            $totalPrice = $totalPrice - ($totalPrice * $discount);
-        }
-
-        $confirmation = [];
-
-        if (isset($selectedNames)) {
-            $confirmation = [
-                'firstName' => $firstName,
-                'lastName' => $lastName,
-                'roomType' => $roomType,
-                'arrivalDate' => $arrivalDate,
-                'departureDate' => $departureDate,
-                'features' => $selectedNames,
-                'totalPrice' => $totalPrice
-            ];
-        } else {
-            $confirmation = [
-                'firstName' => $firstName,
-                'lastName' => $lastName,
-                'roomType' => $roomType,
-                'arrivalDate' => $arrivalDate,
-                'departureDate' => $departureDate,
-                'features' => 'none',
-                'totalPrice' => $totalPrice
-            ];
-        }
-
-        $booking = json_encode($confirmation, JSON_PRETTY_PRINT);
     }
 }
-
 
 use benhall14\phpCalendar\Calendar as calendar;
 
@@ -220,8 +289,9 @@ $calendar->useMondayStartingDate();
 $calendar->useFullDayNames();
 
 ?>
-<section aria-label="popup">
-    <?php if (isset($booking)) { ?>
+
+<?php if (isset($booking)) { ?>
+    <section aria-label="popup">
         <div class="popup" id="popup">
             <div class="popupContainer">
                 <button class="closeWindow" id="closeWindow">
@@ -234,7 +304,7 @@ $calendar->useFullDayNames();
             </div>
         </div>
     <?php
-    } else if ($errors) { ?>
+} else if ($errors) { ?>
         <div class="popup" id="popup">
             <div class="popupContainer">
                 <button class="closeWindow" id="closeWindow">
@@ -248,14 +318,34 @@ $calendar->useFullDayNames();
                 } ?>
             </div>
         </div>
-    <?php
-    } ?>
-</section>
+    </section>
+<?php
+} ?>
 
 <section aria-label="book">
     <div class="calendarContainer">
-        <div>
-            <?php echo $calendar->draw(date('2025-01-01')); ?>
+        <h2 class="labelText">Economy</h2>
+        <div class="calendar">
+            <?php
+            $economyBookingsQuery = $database->query('SELECT arrival_date, departure_date FROM Bookings WHERE room_id = 1');
+            $economyBookingsQuery->execute();
+
+            $economyBookings = $economyBookingsQuery->fetch(PDO::FETCH_ASSOC);
+
+            echo $calendar->draw(date('2025-01-01'));
+            ?>
+        </div>
+        <h2 class="labelText">Standard</h2>
+        <div class="calendar">
+            <?php
+            echo $calendar->draw(date('2025-01-01'));
+            ?>
+        </div>
+        <h2 class="labelText">Luxury</h2>
+        <div class="calendar">
+            <?php
+            echo $calendar->draw(date('2025-01-01'));
+            ?>
         </div>
     </div>
     <form action="" method="post" class="bookingsContainer" id="bookForm">
@@ -278,7 +368,7 @@ $calendar->useFullDayNames();
         <input type="text" name="lastName" class="input" placeholder="Your last name.." required>
 
         <label for="lastName" class="labelText">Transfer Code</label>
-        <input type="text" name="transferCode" class="input" placeholder="Your transfer code.." required>
+        <input type="text" name="transferCode" class="input" id="transferCode" placeholder="Your transfer code.." required>
 
         <label for="features" class="labelText">features</label>
         <div class="block">
