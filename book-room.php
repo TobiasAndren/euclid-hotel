@@ -53,10 +53,7 @@ function depositTransferCode($transferCode, $numberOfDays)
     return $data['status'] ?? false;
 }
 
-
 $errors = [];
-
-
 
 if (isset($_POST['transferCode'], $_POST['roomType'], $_POST['arrivalDate'], $_POST['departureDate'], $_POST['firstName'], $_POST['lastName'])) {
     $roomType = $_POST['roomType'];
@@ -118,7 +115,7 @@ if (isset($_POST['transferCode'], $_POST['roomType'], $_POST['arrivalDate'], $_P
         $features = $_POST["features"];
 
         $selectedFeatures  = str_repeat('?,', count($features) - 1) . '?';
-        $featurePriceQuery = $database->prepare('SELECT price FROM Features WHERE id IN (' . $in . ')');
+        $featurePriceQuery = $database->prepare('SELECT price FROM Features WHERE id IN (' . $selectedFeatures . ')');
         $featurePriceQuery->execute($features);
 
         $featurePriceResult = $featurePriceQuery->fetchAll(PDO::FETCH_ASSOC);
@@ -165,13 +162,14 @@ if (isset($_POST['transferCode'], $_POST['roomType'], $_POST['arrivalDate'], $_P
                     $roomIdResult = $roomIdQuery->fetch(PDO::FETCH_ASSOC);
                     $roomId = $roomIdResult['id'];
 
-                    $insertBookingsQuery = 'INSERT INTO Bookings (guest_id, room_id, arrival_date, departure_date) VALUES (:guestId, :roomId, :arrivalDate, :departureDate)';
+                    $insertBookingsQuery = 'INSERT INTO Bookings (guest_id, room_id, arrival_date, departure_date, total_price) VALUES (:guestId, :roomId, :arrivalDate, :departureDate, :totalPrice)';
 
                     $insertBookings = $database->prepare($insertBookingsQuery);
                     $insertBookings->bindParam(':guestId', $guestId, PDO::PARAM_INT);
                     $insertBookings->bindParam(':roomId', $roomId, PDO::PARAM_INT);
                     $insertBookings->bindParam(':arrivalDate', $arrivalDate, PDO::PARAM_STR);
                     $insertBookings->bindParam(':departureDate', $departureDate, PDO::PARAM_STR);
+                    $insertBookings->bindParam(':totalPrice', $totalPrice, PDO::PARAM_INT);
                     $insertBookings->execute();
 
                     if (isset($features)) {
