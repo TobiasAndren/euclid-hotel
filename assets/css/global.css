@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
 :root {
     --defaultColor: #5F2A84;
@@ -17,6 +18,7 @@
 .body {
     background-color: var(--defaultColor);
     color: var(--textColor);
+    font-family: "Playfair Display", serif;
 }
 
 .text {

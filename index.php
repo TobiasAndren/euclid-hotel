@@ -17,16 +17,16 @@ require __DIR__ . "/contents/header.php";
 
 <section aria-label="welcome-article">
     <article class="welcome">
-        <p class="text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere aperiam nesciunt, magnam ullam incidunt, tempore exercitationem natus id repudiandae veritatis alias. Repellat quae harum sunt cumque? Amet recusandae harum laboriosam.</p>
+        <p class="text">Welcome to Euclid Hotel, your perfect retreat in the heart of a winter wonderland! Start your day with a refreshing hike through snow-covered landscapes, and in the evening, marvel at the magical northern lights dancing across the starry sky. Whether you're seeking adventure or simply want to relax, we offer a unique and unforgettable experience in a remote winter paradise.</p>
     </article>
 </section>
 
 <section aria-label="discount-offer">
     <div class="discountContainer">
-        <img src="assets/images/aurora-borealis.jpg" alt="" class="image">
+        <img src="assets/images/discount.jpeg" alt="" class="image">
         <article class="discountArticle">
-            <h4>Offer</h4>
-            <p class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore aut laborum, voluptates omnis magni quas quos deserunt quidem animi molestiae dicta quam laboriosam quasi, quae voluptatem blanditiis voluptatibus culpa exercitationem!</p>
+            <h4>30% Discount!</h4>
+            <p class="text">Book your winter getaway at Euclid Hotel and get 30% off your stay when you book 3 or more nights. Take the opportunity to explore the beautiful winter scenery and create unforgettable memories!</p>
         </article>
     </div>
 </section>
@@ -35,27 +35,30 @@ require __DIR__ . "/contents/header.php";
     <article class="bookArticle">
         <h2>Interested?</h2>
         <p class="text">Book a room here</p>
-        <a href="/contents/book-room.php" class="bookHereButton">Book Here</a>
+        <a href="book-room.php" class="bookHereButton">Book Here</a>
     </article>
 </section>
 
 <section aria-label="features">
     <div class="featuresContainer featureOne">
-        <img src="assets/images/aurora-borealis.jpg" alt="" class="image">
+        <img src="assets/images/snowmobile.jpeg" alt="" class="image">
         <article class="featuresArticle">
-            <p class="text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas ut sapiente expedita perspiciatis voluptatem error architecto animi beatae odio nostrum quo maxime ea et, iure laudantium ratione consequuntur numquam pariatur?</p>
+            <h4>Snowmobile Adventure</h4>
+            <p class="text">Want to explore the surroundings in a new way? Rent a snowmobile and head out on your own adventure! Whether you want to ride through serene snow-covered landscapes or embark on longer excursions, the snowmobile gives you the freedom to discover more and have even more fun.</p>
         </article>
     </div>
     <div class="featuresContainer featureTwo">
         <article class="featuresArticle">
-            <p class="text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas ut sapiente expedita perspiciatis voluptatem error architecto animi beatae odio nostrum quo maxime ea et, iure laudantium ratione consequuntur numquam pariatur?</p>
+            <h4>Heated Lagoon</h4>
+            <p class="text">Treat yourself to a relaxing moment in our heated lagoon while the winter chill surrounds you. It's the perfect spot to unwind after a long day in the snow and enjoy the peace and tranquility beneath the open winter sky.</p>
         </article>
-        <img src="assets/images/aurora-borealis.jpg" alt="" class="image">
+        <img src="assets/images/heated-lagoon.jpeg" alt="" class="image">
     </div>
     <div class="featuresContainer featureThree">
-        <img src="assets/images/aurora-borealis.jpg" alt="" class="image">
+        <img src="assets/images/coffee-maker.jpeg" alt="" class="image">
         <article class="featuresArticle">
-            <p class="text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas ut sapiente expedita perspiciatis voluptatem error architecto animi beatae odio nostrum quo maxime ea et, iure laudantium ratione consequuntur numquam pariatur?</p>
+            <h4>Coffee Maker</h4>
+            <p class="text">There's nothing like a steaming cup of coffee when you return from your outdoor adventures. With our state-of-the-art coffee maker, you can easily brew your favorite drink and warm up before your next adventure.</p>
         </article>
     </div>
 
@@ -63,7 +66,7 @@ require __DIR__ . "/contents/header.php";
 
 <section aria-label="sign-up">
     <article class="signUpContainer">
-        <h4>Become a member</h4>
+        <h3>Become a member</h3>
         <p class="text">Sign up here</p>
         <button class="signUpButton">Sign Up</button>
     </article>

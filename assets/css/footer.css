@@ -3,3 +3,68 @@
     width: 100vw;
     background-color: var(--elementColor);
 }
+
+.footerContentContainer {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footerLinkContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    padding: 3rem;
+    width: 50%;
+}
+
+.footerLinks {
+    margin-top: 2rem;
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: var(--textColor);
+    margin-left: 1.3rem;
+    font-size: 1.5rem;
+}
+
+.footerLinks:hover {
+    text-decoration: underline;
+}
+
+.socialsContainer {
+    margin: 3rem;
+    width: 50%;
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    flex-direction: column;
+}
+
+.footerText {
+    margin-top: 2rem;
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: var(--textColor);
+    margin-left: 1.3rem;
+    font-size: 1.5rem;
+}
+
+.socialsImageContainer {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+
+.socialsImage {
+    object-fit: cover;
+    height: 40%;
+    width: 10%;
+    margin-top: 1rem;
+    cursor: pointer;
+}
+
+.socialsImage:hover {
+    transform: scale(1.1);
+}
