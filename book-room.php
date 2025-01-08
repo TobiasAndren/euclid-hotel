@@ -264,8 +264,12 @@ if (isset($_POST['transferCode'], $_POST['roomType'], $_POST['arrivalDate'], $_P
                             'arrivalDate' => $arrivalDate,
                             'departureDate' => $departureDate,
                             'features' => $selectedNames,
+                            'stars' => 4,
                             'totalPrice' => $totalPrice,
-                            'additonalInfo' => 'Thanks for your booking at the Euclid hotel! We hope you look forward to your stay just as much as us. If you have any additional questions feel free to contact us!'
+                            'additonalInfo' => [
+                                'greeting' => 'Thanks for your booking at the Euclid hotel! We hope you look forward to your stay just as much as us. If you have any additional questions feel free to contact us!',
+                                'videoUrl' => 'https://youtu.be/DDdByJYUVeA?si=yvdKyw25SVkdzNPU'
+                            ]
                         ];
                     } else {
                         $confirmation = [
@@ -276,8 +280,12 @@ if (isset($_POST['transferCode'], $_POST['roomType'], $_POST['arrivalDate'], $_P
                             'arrivalDate' => $arrivalDate,
                             'departureDate' => $departureDate,
                             'features' => 'none',
+                            'stars' => 4,
                             'totalPrice' => $totalPrice,
-                            'additonalInfo' => 'Thanks for your booking at the Euclid hotel! We hope you look forward to your stay just as much as us. If you have any additional questions feel free to contact us!'
+                            'additonalInfo' => [
+                                'greeting' => 'Thanks for your booking at the Euclid hotel! We hope you look forward to your stay just as much as us. If you have any additional questions feel free to contact us!',
+                                'videoUrl' => 'https://youtu.be/DDdByJYUVeA?si=yvdKyw25SVkdzNPU'
+                            ]
                         ];
 
                         $booking = json_encode($confirmation, JSON_PRETTY_PRINT);

@@ -9,7 +9,13 @@ require __DIR__ . "/contents/header.php";
     <div class="hero">
         <article class="heroTextContainer">
             <h1 class="heroText">Euclid</h1>
-            <h3>The Night Belongs To You!</h3>
+            <div class="stars">
+                <img src="/assets/images/star.png" alt="" class="starImage">
+                <img src="/assets/images/star.png" alt="" class="starImage">
+                <img src="/assets/images/star.png" alt="" class="starImage">
+                <img src="/assets/images/star.png" alt="" class="starImage">
+            </div>
+            <h3 class="motto">The Night Belongs To You!</h3>
         </article>
         <img src="assets/images/aurora-borealis.jpg" alt="" class="heroImage">
     </div>

@@ -28,3 +28,23 @@
     font-size: 7rem;
     font-family: "Dancing Script", cursive;
 }
+
+.stars {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+    gap: 1px;
+    height: 80%;
+    width: 20%;
+}
+
+.starImage {
+    height: 50%;
+    width: 10%;
+    object-fit: cover;
+}
+
+.motto {
+    margin-top: 1rem;
+}
