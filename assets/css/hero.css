@@ -1,10 +1,11 @@
 .hero {
-    height: 95vh;
+    height: 85vh;
     width: 100vw;
+    top: 0;
+    z-index: -1;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.2) 100%);
 }
 
 .heroImage {

@@ -35,7 +35,7 @@ require __DIR__ . "/contents/header.php";
     <article class="bookArticle">
         <h2>Interested?</h2>
         <p class="text">Book a room here</p>
-        <a href="book-room.php" class="bookHereButton">Book Here</a>
+        <a href="/contents/book-room.php" class="bookHereButton">Book Here</a>
     </article>
 </section>
 

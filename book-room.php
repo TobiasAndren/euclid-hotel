@@ -4,6 +4,7 @@ require __DIR__ . "/vendor/autoload.php";
 require __DIR__ . "/contents/header.php";
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
@@ -24,33 +25,48 @@ function checkTransferCode($transferCode, $totalPrice)
 {
     $client = new Client();
 
-    $response = $client->post('https://www.yrgopelago.se/centralbank/transferCode', [
-        'json' => [
-            'transferCode' => $transferCode,
-            'totalcost' => $totalPrice
-        ]
-    ]);
+    try {
 
-    $data = json_decode($response->getBody()->getContents(), true);
+        $response = $client->post('https://www.yrgopelago.se/centralbank/transferCode', [
+            'json' => [
+                'transferCode' => $transferCode,
+                'totalcost' => $totalPrice
+            ]
+        ]);
 
-    return $data['status'] ?? false;
+        $data = json_decode($response->getBody()->getContents(), true);
+
+        return $data['status'] ?? false;
+    } catch (ClientException $used) {
+        $response = $used->getResponse()->getBody()->getContents();
+
+        return false;
+    }
 }
 
 function depositTransferCode($transferCode, $numberOfDays)
 {
     $client = new Client();
 
-    $response = $client->post('https://www.yrgopelago.se/centralbank/deposit', [
-        'json' => [
-            'user' => 'Tobias',
-            'transferCode' => $transferCode,
-            'numberOfDays' => $numberOfDays
-        ]
-    ]);
+    try {
 
-    $data = json_decode($response->getBody()->getContents(), true);
 
-    return $data['status'] ?? false;
+        $response = $client->post('https://www.yrgopelago.se/centralbank/deposit', [
+            'json' => [
+                'user' => 'Tobias',
+                'transferCode' => $transferCode,
+                'numberOfDays' => $numberOfDays
+            ]
+        ]);
+
+        $data = json_decode($response->getBody()->getContents(), true);
+
+        return $data['status'] ?? false;
+    } catch (ClientException $deposit) {
+        $response = $deposit->getResponse()->getBody()->getContents();
+
+        return false;
+    }
 }
 
 $errors = [];
@@ -94,7 +110,7 @@ if (isset($_POST['transferCode'], $_POST['roomType'], $_POST['arrivalDate'], $_P
 
     $interval = $arrival->diff($departure);
 
-    $numberOfDays = $interval->days;
+    $numberOfDays = $interval->days + 1;
 
     $roomPriceQuery = $database->query('SELECT price FROM Rooms WHERE room_type = :roomType');
     $roomPriceQuery->bindParam(':roomType', $roomType, PDO::PARAM_STR);
@@ -280,11 +296,23 @@ if (isset($_POST['transferCode'], $_POST['roomType'], $_POST['arrivalDate'], $_P
 
 use benhall14\phpCalendar\Calendar as calendar;
 
-$calendar = new calendar;
-$calendar->stylesheet();
+$economyCalendar = new calendar;
+$economyCalendar->stylesheet();
 
-$calendar->useMondayStartingDate();
-$calendar->useFullDayNames();
+$economyCalendar->useMondayStartingDate();
+$economyCalendar->useFullDayNames();
+
+$standardCalendar = new calendar;
+$standardCalendar->stylesheet();
+
+$standardCalendar->useMondayStartingDate();
+$standardCalendar->useFullDayNames();
+
+$luxuryCalendar = new calendar;
+$luxuryCalendar->stylesheet();
+
+$luxuryCalendar->useMondayStartingDate();
+$luxuryCalendar->useFullDayNames();
 
 ?>
 
@@ -328,21 +356,60 @@ $calendar->useFullDayNames();
             $economyBookingsQuery = $database->query('SELECT arrival_date, departure_date FROM Bookings WHERE room_id = 1');
             $economyBookingsQuery->execute();
 
-            $economyBookings = $economyBookingsQuery->fetch(PDO::FETCH_ASSOC);
+            $economyBookings = $economyBookingsQuery->fetchAll(PDO::FETCH_ASSOC);
 
-            echo $calendar->draw(date('2025-01-01'));
+            foreach ($economyBookings as $economyBooking) {
+                $economyCalendar->addEvent(
+                    $economyBooking['arrival_date'],
+                    $economyBooking['departure_date'],
+                    "",
+                    true
+                );
+            }
+
+            echo $economyCalendar->draw(date('2025-01-01'));
+
             ?>
         </div>
         <h2 class="labelText">Standard</h2>
         <div class="calendar">
             <?php
-            echo $calendar->draw(date('2025-01-01'));
+            $standardBookingsQuery = $database->query('SELECT arrival_date, departure_date FROM Bookings WHERE room_id = 2');
+            $standardBookingsQuery->execute();
+
+            $standardBookings = $standardBookingsQuery->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach ($standardBookings as $standardBooking) {
+                $standardCalendar->addEvent(
+                    $standardBooking['arrival_date'],
+                    $standardBooking['departure_date'],
+                    "",
+                    true
+                );
+            }
+
+            echo $standardCalendar->draw(date('2025-01-01'));
+
             ?>
         </div>
         <h2 class="labelText">Luxury</h2>
         <div class="calendar">
             <?php
-            echo $calendar->draw(date('2025-01-01'));
+            $luxuryBookingsQuery = $database->query('SELECT arrival_date, departure_date FROM Bookings WHERE room_id = 3');
+            $luxuryBookingsQuery->execute();
+
+            $luxuryBookings = $luxuryBookingsQuery->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach ($luxuryBookings as $luxuryBooking) {
+                $luxuryCalendar->addEvent(
+                    $luxuryBooking['arrival_date'],
+                    $luxuryBooking['departure_date'],
+                    "",
+                    true
+                );
+            }
+
+            echo $luxuryCalendar->draw(date('2025-01-01'));
             ?>
         </div>
     </div>
