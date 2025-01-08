@@ -1,13 +1,57 @@
+.calendarRoomContainer {
+    display: flex;
+}
+
 .calendarContainer {
     margin-top: 1rem;
     margin-left: 3rem;
     margin-right: 3rem;
     width: 50vw;
-    height: 185vh;
+    height: 190vh;
 }
 
 .calendar {
     margin-top: 1rem;
+}
+
+.roomsContainer {
+    margin-top: 1rem;
+    margin-left: 3rem;
+    margin-right: 3rem;
+    width: 40vw;
+    height: 185vh;
+}
+
+.rooms {
+    background-color: var(--elementColor);
+    height: 50%;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.roomName {
+    align-self: flex-start;
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+}
+
+.roomImage {
+    object-fit: cover;
+    height: 80%;
+    width: 90%;
+}
+
+.roomCost {
+    background-color: var(--darkerDefaultColor);
+    align-self: flex-start;
+    margin-left: 2rem;
+    margin-top: 1rem;
+    font-size: 1.3rem;
+    width: 15%;
+    text-align: center;
 }
 
 .bookingsContainer {

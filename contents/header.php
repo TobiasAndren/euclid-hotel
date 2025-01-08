@@ -22,7 +22,7 @@
     <header class="header">
         <a href="index.php" class="logo">Euclid</a>
         <nav>
-            <a href="" class="headerLinks">about us</a>
-            <a href="book-room.php" class="headerLinks">book now</a>
+            <a href="" class="headerLinks">About us</a>
+            <a href="book-room.php" class="headerLinks">Book now</a>
         </nav>
     </header>

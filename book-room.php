@@ -349,68 +349,87 @@ $luxuryCalendar->useFullDayNames();
 } ?>
 
 <section aria-label="book">
-    <div class="calendarContainer">
-        <h2 class="labelText">Economy</h2>
-        <div class="calendar">
-            <?php
-            $economyBookingsQuery = $database->query('SELECT arrival_date, departure_date FROM Bookings WHERE room_id = 1');
-            $economyBookingsQuery->execute();
+    <div class="calendarRoomContainer">
+        <div class="calendarContainer">
+            <h2 class="labelText">Economy</h2>
+            <div class="calendar">
+                <?php
+                $economyBookingsQuery = $database->query('SELECT arrival_date, departure_date FROM Bookings WHERE room_id = 1');
+                $economyBookingsQuery->execute();
 
-            $economyBookings = $economyBookingsQuery->fetchAll(PDO::FETCH_ASSOC);
+                $economyBookings = $economyBookingsQuery->fetchAll(PDO::FETCH_ASSOC);
 
-            foreach ($economyBookings as $economyBooking) {
-                $economyCalendar->addEvent(
-                    $economyBooking['arrival_date'],
-                    $economyBooking['departure_date'],
-                    "",
-                    true
-                );
-            }
+                foreach ($economyBookings as $economyBooking) {
+                    $economyCalendar->addEvent(
+                        $economyBooking['arrival_date'],
+                        $economyBooking['departure_date'],
+                        "",
+                        true
+                    );
+                }
 
-            echo $economyCalendar->draw(date('2025-01-01'));
+                echo $economyCalendar->draw(date('2025-01-01'));
 
-            ?>
+                ?>
+            </div>
+            <h2 class="labelText">Standard</h2>
+            <div class="calendar">
+                <?php
+                $standardBookingsQuery = $database->query('SELECT arrival_date, departure_date FROM Bookings WHERE room_id = 2');
+                $standardBookingsQuery->execute();
+
+                $standardBookings = $standardBookingsQuery->fetchAll(PDO::FETCH_ASSOC);
+
+                foreach ($standardBookings as $standardBooking) {
+                    $standardCalendar->addEvent(
+                        $standardBooking['arrival_date'],
+                        $standardBooking['departure_date'],
+                        "",
+                        true
+                    );
+                }
+
+                echo $standardCalendar->draw(date('2025-01-01'));
+
+                ?>
+            </div>
+            <h2 class="labelText">Luxury</h2>
+            <div class="calendar">
+                <?php
+                $luxuryBookingsQuery = $database->query('SELECT arrival_date, departure_date FROM Bookings WHERE room_id = 3');
+                $luxuryBookingsQuery->execute();
+
+                $luxuryBookings = $luxuryBookingsQuery->fetchAll(PDO::FETCH_ASSOC);
+
+                foreach ($luxuryBookings as $luxuryBooking) {
+                    $luxuryCalendar->addEvent(
+                        $luxuryBooking['arrival_date'],
+                        $luxuryBooking['departure_date'],
+                        "",
+                        true
+                    );
+                }
+
+                echo $luxuryCalendar->draw(date('2025-01-01'));
+                ?>
+            </div>
         </div>
-        <h2 class="labelText">Standard</h2>
-        <div class="calendar">
-            <?php
-            $standardBookingsQuery = $database->query('SELECT arrival_date, departure_date FROM Bookings WHERE room_id = 2');
-            $standardBookingsQuery->execute();
-
-            $standardBookings = $standardBookingsQuery->fetchAll(PDO::FETCH_ASSOC);
-
-            foreach ($standardBookings as $standardBooking) {
-                $standardCalendar->addEvent(
-                    $standardBooking['arrival_date'],
-                    $standardBooking['departure_date'],
-                    "",
-                    true
-                );
-            }
-
-            echo $standardCalendar->draw(date('2025-01-01'));
-
-            ?>
-        </div>
-        <h2 class="labelText">Luxury</h2>
-        <div class="calendar">
-            <?php
-            $luxuryBookingsQuery = $database->query('SELECT arrival_date, departure_date FROM Bookings WHERE room_id = 3');
-            $luxuryBookingsQuery->execute();
-
-            $luxuryBookings = $luxuryBookingsQuery->fetchAll(PDO::FETCH_ASSOC);
-
-            foreach ($luxuryBookings as $luxuryBooking) {
-                $luxuryCalendar->addEvent(
-                    $luxuryBooking['arrival_date'],
-                    $luxuryBooking['departure_date'],
-                    "",
-                    true
-                );
-            }
-
-            echo $luxuryCalendar->draw(date('2025-01-01'));
-            ?>
+        <div class="roomsContainer">
+            <div class="rooms">
+                <h2 class="roomName">Economy:</h2>
+                <img src="/assets/images/economy-room.jpeg" alt="" class="roomImage">
+                <p class="roomCost">Cost: 2$</p>
+            </div>
+            <div class="rooms">
+                <h2 class="roomName">Standard:</h2>
+                <img src="/assets/images/standard-room.jpeg" alt="" class="roomImage">
+                <p class="roomCost">Cost: 3$</p>
+            </div>
+            <div class="rooms">
+                <h2 class="roomName">Luxury:</h2>
+                <img src="/assets/images/luxury-room.jpeg" alt="" class="roomImage">
+                <p class="roomCost">Cost: 5$</p>
+            </div>
         </div>
     </div>
     <form action="" method="post" class="bookingsContainer" id="bookForm">
@@ -435,18 +454,18 @@ $luxuryCalendar->useFullDayNames();
         <label for="lastName" class="labelText">Transfer Code</label>
         <input type="text" name="transferCode" class="input" id="transferCode" placeholder="Your transfer code.." required>
 
-        <label for="features" class="labelText">features</label>
+        <label for="features" class="labelText">Features</label>
         <div class="block">
             <input type="checkbox" name="features[]" value="1" class="checkbox">
-            coffee maker $2
+            Coffee maker $2
         </div>
         <div class="block">
             <input type="checkbox" name="features[]" value="2" class="checkbox">
-            heated lagoon $4
+            Heated lagoon $4
         </div>
         <div class="block">
             <input type="checkbox" name="features[]" value="3" class="checkbox">
-            snowmobile $6
+            Snowmobile $6
         </div>
 
         <button type="submit" class="bookButton" id="bookButton">Book now</button>
