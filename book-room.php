@@ -425,17 +425,17 @@ $luxuryCalendar->useFullDayNames();
         <div class="roomsContainer">
             <div class="rooms">
                 <h2 class="roomName">Economy:</h2>
-                <img src="/assets/images/economy-room.jpeg" alt="" class="roomImage">
+                <img src="assets/images/economy-room.jpeg" alt="" class="roomImage">
                 <p class="roomCost">Cost: 2$</p>
             </div>
             <div class="rooms">
                 <h2 class="roomName">Standard:</h2>
-                <img src="/assets/images/standard-room.jpeg" alt="" class="roomImage">
+                <img src="assets/images/standard-room.jpeg" alt="" class="roomImage">
                 <p class="roomCost">Cost: 3$</p>
             </div>
             <div class="rooms">
                 <h2 class="roomName">Luxury:</h2>
-                <img src="/assets/images/luxury-room.jpeg" alt="" class="roomImage">
+                <img src="assets/images/luxury-room.jpeg" alt="" class="roomImage">
                 <p class="roomCost">Cost: 5$</p>
             </div>
         </div>

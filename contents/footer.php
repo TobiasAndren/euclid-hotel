@@ -8,8 +8,8 @@
         <div class="socialsContainer">
             <h2 class="footerText">Socials:</h2>
             <div class="socialsImageContainer">
-                <img src="/assets/images/facebook.png" alt="" class="socialsImage">
-                <img src="/assets/images/instagram.png" alt="" class="socialsImage">
+                <img src="assets/images/facebook.png" alt="" class="socialsImage">
+                <img src="assets/images/instagram.png" alt="" class="socialsImage">
             </div>
         </div>
     </article>
