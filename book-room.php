@@ -271,8 +271,6 @@ if (isset($_POST['transferCode'], $_POST['roomType'], $_POST['arrivalDate'], $_P
                                 'videoUrl' => 'https://youtu.be/DDdByJYUVeA?si=yvdKyw25SVkdzNPU'
                             ]
                         ];
-
-                        $booking = json_encode($confirmation, JSON_PRETTY_PRINT);
                     } else {
                         $confirmation = [
                             'firstName' => $firstName,
@@ -289,9 +287,8 @@ if (isset($_POST['transferCode'], $_POST['roomType'], $_POST['arrivalDate'], $_P
                                 'videoUrl' => 'https://youtu.be/DDdByJYUVeA?si=yvdKyw25SVkdzNPU'
                             ]
                         ];
-
-                        $booking = json_encode($confirmation, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
                     }
+                    $booking = json_encode($confirmation, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
                 } else {
                     $errors[] = "payment failed";
                 }
