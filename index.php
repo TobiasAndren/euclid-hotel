@@ -32,7 +32,7 @@ require __DIR__ . "/contents/header.php";
         <img src="assets/images/discount.jpeg" alt="" class="image">
         <article class="discountArticle">
             <h4>30% Discount!</h4>
-            <p class="text">Book your winter getaway at Euclid Hotel and get 30% off your stay when you book 3 or more nights. Take the opportunity to explore the beautiful winter scenery and create unforgettable memories!</p>
+            <p class="text">Book your winter getaway at Euclid Hotel and get 30% off your stay when you book 3 or more days. Take the opportunity to explore the beautiful winter scenery and create unforgettable memories!</p>
         </article>
     </div>
 </section>
