@@ -290,7 +290,7 @@ if (isset($_POST['transferCode'], $_POST['roomType'], $_POST['arrivalDate'], $_P
                             ]
                         ];
 
-                        $booking = json_encode($confirmation, JSON_PRETTY_PRINT);
+                        $booking = json_encode($confirmation, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
                     }
                 } else {
                     $errors[] = "payment failed";
