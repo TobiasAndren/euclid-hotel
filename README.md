@@ -45,3 +45,27 @@ INSERT INTO Features(feature_name, price)
 VALUES ("coffee maker", 2), ("heated lagoon", 4), ("snowmobile", 6);
 
 You can of course change the contents to your liking. This website also uses an external api to consume transferCodes made from a website, therefore there are functions made in the booking file that checks if the given transferCode is a UUID and where it also sends the transferCode to the api to check if it is used and also have enough "money" on it and after that there is another function that then consumes the transferCode into "money" in the api. If you cant access this kind of api you can remove or just comment out the if statements where it checks the transferCode and the website should work just fine.
+
+## Feedback from Malin
+
+### General
+- Comments that explain the code are missing throughout the entire project.
+
+### `index.php`
+- Missing `alt` text for images. Adding this would improve accessibility.
+
+### `book-room.php`
+- Comments would have been especially beneficial in this file.
+- The file structure could be improved by separating:
+  - Functions
+  - Booking process
+  - Variables
+  - HTML
+  - PHP etc.
+- Splitting these into multiple files, or even separating them within the same file would enhance readability, maintainability, and reusability.
+- More functions could have been used to make the booking sequence clearer.
+- There are many nested `if` statements. A large number of if statements can increase the complexity of your code and make it more prone to errors.
+- PHP and HTML are heavily mixed; separating them would improve readability and maintain a clear distinction between logic and presentation.
+
+### `footer.php`
+- Using kebab-case for class names is more consistent with HTML/CSS standards and makes longer names easier to read.
